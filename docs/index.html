@@ -16,7 +16,7 @@
     <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
         <header class="mdl-layout__header">
             <div class="mdl-layout__header-row">
-                <span class="mdl-layout-title">yPromo2QR</span>
+                <span class="mdl-layout-title">yPromo2QR / プロモコード簡単入力</span>
             </div>
         </header>
         <main class="mdl-layout__content">
@@ -30,8 +30,26 @@
                         <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" id="getQRCodeButton">QRコードを作成する</button>
                     </p>
                     <p>
-                    <pre><div id="output" style="background-color:#FAFAFA; padding: 16px"></div></pre>
+                    <div id="outputBox" style="background-color:#FAFAFA; padding: 16px; font-size: 70%;">
+                        <pre id="output"></pre>
+                    </div>
+                    <br><br>
                     </p>
+                    <h4>設定</h4>
+                    <label id="todoPrefixLabel" class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="todoPrefix">
+                        <input type="checkbox" id="todoPrefix" class="mdl-checkbox__input" checked>
+                        <span class="mdl-checkbox__label">Markdown記法のTodoプレフィックスを付与</span>
+                    </label>
+                    <div style="border:solid 1px #eee; padding: 16px; color: #808080 ">
+                        Markdown記法のTodoプレフィックス（- [ ]）を付与することで、<br>
+                        チェックの有無により、プロモコードの利用有無を管理できます。<br>
+<pre>
+出力例
+ - [ ] ABC1234XXX([QRコード](https://QRコードリンク))
+ - [ ] DEF5678XXX([QRコード](https://QRコードリンク))</pre>
+                        Markdownプレビュー表示<br>
+                        <img src="preview.png" width="190px">
+                    </div>
                     <textarea id="hiddenArea"></textarea>
                     <!-- snackbar -->
                     <div id="snackbar" class="mdl-js-snackbar mdl-snackbar">
@@ -51,7 +69,7 @@
     <script>
         // ロード時
         $().ready(function(){
-            $('#output').hide();
+            $('#outputBox').hide();
             $('#hiddenArea').hide();
         });
         
@@ -62,6 +80,14 @@
             var showToastButton = document.querySelector('#getQRCodeButton');
             showToastButton.addEventListener('click', function() {
                 'use strict';
+                
+                var input = $('#input').val();
+                
+                // プロモコードが入力されていない場合のエラー処理
+                if (input.length == 0) {
+                    return;
+                }
+                
                 var data = {message: 'クリップボードにコピーしました'};
                 snackbarContainer.MaterialSnackbar.showSnackbar(data);
             });
@@ -74,7 +100,7 @@
             // プロモコードが入力されていない場合のエラー処理
             if (input.length == 0) {
                 alert("プロモコードを入力してください")
-                return
+                return;
             }
             
             // 1行ごとに入力を配列に格納
@@ -89,15 +115,22 @@
                 
                 var installUrl = "https://phobos.apple.com/WebObjects/MZFinance.woa/wa/freeProductCodeWizard?code=" + this;
                 var resultPageUrl = window.location.href.replace(/index.html/g, "") + "result.html" + "?" + installUrl;
-                var outputString = "- [ ] " + this + "([QRコード](" + resultPageUrl + "))";
+                var outputString = this + "([QRコード](" + resultPageUrl + "))";
+                
+                // Todoプレフィックス付与
+                if( $("#todoPrefixLabel").is('.is-checked') ) {
+                    outputString = "- [ ] " + outputString;
+                }
+                
                 outputArray.push(outputString);
             });
             
             // 変換結果を画面に表示（改行区切りで表示）
             var outputString = outputArray.join("\n");
             var output = $('#output');
+            var outputBox = $('#outputBox');
             output.text(outputString);
-            output.show('slow');
+            outputBox.show('slow');
             
             // クリップボードにコピー
             var hiddenArea = $('#hiddenArea');
