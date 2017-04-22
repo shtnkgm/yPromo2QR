@@ -88,7 +88,7 @@
                 }
                 
                 var installUrl = "https://phobos.apple.com/WebObjects/MZFinance.woa/wa/freeProductCodeWizard?code=" + this;
-                var resultPageUrl = window.location.href.replace(/index.html/g, "") + "result.html + "?" + installUrl;
+                var resultPageUrl = window.location.href.replace(/index.html/g, "") + "result.html" + "?" + installUrl;
                 var outputString = "- [ ]" + this + "([QRコード](" + resultPageUrl + "))";
                 outputArray.push(outputString);
             });
