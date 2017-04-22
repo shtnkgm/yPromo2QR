@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Promo2QR</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script
+  src="https://code.jquery.com/jquery-3.2.1.min.js"
+  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+  crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.blue-red.min.css" />
+    <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+</head>
+<body>
+    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+        <header class="mdl-layout__header">
+            <div class="mdl-layout__header-row">
+                <span class="mdl-layout-title">yPromo2QR</span>
+            </div>
+        </header>
+        <main class="mdl-layout__content">
+            <div class="mdl-grid" style="padding: 70px">
+                <div class="page-content">
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                        <textarea class="mdl-textfield__input" type="text" rows= "10" id="input"></textarea>
+                        <label class="mdl-textfield__label" for="input">プロモコードをペースト（複数可）</label>
+                    </div>
+                    <p>
+                        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" id="getQRCodeButton">QRコードを作成する</button>
+                    </p>
+                    <p>
+                    <pre><div id="output" style="background-color:#FAFAFA; padding: 16px"></div></pre>
+                    </p>
+                    <textarea id="hiddenArea"></textarea>
+                    <!-- snackbar -->
+                    <div id="snackbar" class="mdl-js-snackbar mdl-snackbar">
+                        <div class="mdl-snackbar__text"></div>
+                        <button class="mdl-snackbar__action" type="button"></button>
+                    </div>
+                    <div class="footer">
+                        <br>
+                        <br>
+                        <p>© Shota Nakagami All Rights Reserved.</p>
+                        <p></p>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script>
+        // ロード時
+        $().ready(function(){
+            $('#output').hide();
+            $('#hiddenArea').hide();
+        });
+        
+        // トースト表示
+        (function() {
+            'use strict';
+            var snackbarContainer = document.querySelector('#snackbar');
+            var showToastButton = document.querySelector('#getQRCodeButton');
+            showToastButton.addEventListener('click', function() {
+                'use strict';
+                var data = {message: 'クリップボードにコピーしました'};
+                snackbarContainer.MaterialSnackbar.showSnackbar(data);
+            });
+        }());
+        
+        // 「QRコードを作成する」ボタンがクリックされたとき
+        $('#getQRCodeButton').on("click", function() {
+            var input = $('#input').val();
+            
+            // プロモコードが入力されていない場合のエラー処理
+            if (input.length == 0) {
+                alert("プロモコードを入力してください")
+                return
+            }
+            
+            // 1行ごとに入力を配列に格納
+            var inputArray = input.split(/\r\n|\r|\n/);
+            
+            // 出力用に変換して配列に格納
+            var outputArray = []
+            jQuery.each(inputArray, function() {
+                if (this.length == 0) {
+                    return true;
+                }
+                
+                var installUrl = "https://phobos.apple.com/WebObjects/MZFinance.woa/wa/freeProductCodeWizard?code=" + this;
+                var resultPageUrl = window.location.href.replace(/index.html/g, "") + "result.html + "?" + installUrl;
+                var outputString = "- [ ]" + this + "([QRコード](" + resultPageUrl + "))";
+                outputArray.push(outputString);
+            });
+            
+            // 変換結果を画面に表示（改行区切りで表示）
+            var outputString = outputArray.join("\n");
+            var output = $('#output');
+            output.text(outputString);
+            output.show('slow');
+            
+            // クリップボードにコピー
+            var hiddenArea = $('#hiddenArea');
+            hiddenArea.show();
+            hiddenArea.val(outputString);
+            hiddenArea.select();
+            document.execCommand('copy');
+            hiddenArea.hide();
+        });       
+    </script>
+    <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-73117863-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+</body>
+</html>
