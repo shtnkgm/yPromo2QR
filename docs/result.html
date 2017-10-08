@@ -15,11 +15,14 @@
     <script>
       "use strict";
       $(document).ready(function() {
+        var url = location.search.substring(1);
+
         var qr = qrcode(0, "L");
-        qr.addData(location.search.substring(1));
+        qr.addData(url);
         qr.make();
 
         $("div#qr-holder").html(qr.createSvgTag(5));
+        $("div#url"      ).text(url);
       });
     </script>
 </head>
@@ -34,6 +37,7 @@
             <div class="mdl-grid" style="padding: 70px">
                 <div class="page-content">
                     <div id="qr-holder"></div>
+                    <div id="url"></div>
                 </div>
             </div>
         </main>
