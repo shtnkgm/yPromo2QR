@@ -22,10 +22,12 @@
         <main class="mdl-layout__content">
             <div class="mdl-grid" style="padding: 70px">
                 <div class="page-content">
+                <img id="qr">
                 <script>
-                var arg = new Object;
+                "use strict";
                 var url = "https://chart.apis.google.com/chart?cht=qr&chs=200x200&chl=" + location.search.substring(1)
-                document.write('<img src="' + url + '">');
+                var q = document.getElementById("qr");
+                q.src = url;
                 </script>
                 </div>
             </div>
