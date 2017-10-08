@@ -14,7 +14,7 @@
     <script>
       "use strict";
       $(document).ready(function() {
-        $("img#qr").attr("src", "https://chart.apis.google.com/chart?cht=qr&chs=200x200&chl=" + location.search.substring(1));
+        $("img#qr").attr("src", "https://chart.apis.google.com/chart?cht=qr&chs=200x200&chl=" + encodeURIComponent(location.search.substring(1)));
       });
     </script>
 </head>
