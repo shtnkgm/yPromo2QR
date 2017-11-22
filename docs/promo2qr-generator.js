@@ -1,10 +1,7 @@
 "use strict";
 
-// ロード時
-$(function(){
-    $('#outputBox' ).hide();
-    $('#hiddenArea').hide();
-});
+$('#outputBox' ).hide();
+$('#hiddenArea').hide();
 
 
 // 「QRコードを作成する」ボタンがクリックされたとき
@@ -17,7 +14,7 @@ $('#getQRCodeButton').on("click", function() {
 	    message: "プロモコードを入力してください"
 	});
 
-        return;
+	return;
     }
 
     // 1行ごとに入力を配列に格納
@@ -28,17 +25,17 @@ $('#getQRCodeButton').on("click", function() {
 
     // 出力用に変換して配列に格納
     var outputArray = inputArray.map(function(i) {
-        var installUrl    = "https://phobos.apple.com/WebObjects/MZFinance.woa/wa/freeProductCodeWizard?code=" + i;
-        var resultPageUrl = window.location.href.replace(/index.html/g, "") + "result.html" + "?" + installUrl;
-        var outputString  = i + "([QRコード](" + resultPageUrl + "))";
+	var installUrl    = "https://phobos.apple.com/WebObjects/MZFinance.woa/wa/freeProductCodeWizard?code=" + i;
+	var resultPageUrl = window.location.href.replace(/index.html/g, "") + "result.html" + "?" + installUrl;
+	var outputString  = i + "([QRコード](" + resultPageUrl + "))";
 
-        return outputString;
+	return outputString;
     });
 
     // Todoプレフィックス付与
     if( $("#todoPrefixLabel").is('.is-checked') ) {
 	outputArray = outputArray.map(function(i) {
-            return "- [ ] " + i;
+	    return "- [ ] " + i;
 	});
     }
 
