@@ -1,7 +1,8 @@
 "use strict";
+
 // ロード時
 $(function(){
-    $('#outputBox').hide();
+    $('#outputBox' ).hide();
     $('#hiddenArea').hide();
 });
 
@@ -24,9 +25,9 @@ $('#getQRCodeButton').on("click", function() {
 
     // 出力用に変換して配列に格納
     var outputArray = inputArray.map(function(i) {
-        var installUrl = "https://phobos.apple.com/WebObjects/MZFinance.woa/wa/freeProductCodeWizard?code=" + i;
+        var installUrl    = "https://phobos.apple.com/WebObjects/MZFinance.woa/wa/freeProductCodeWizard?code=" + i;
         var resultPageUrl = window.location.href.replace(/index.html/g, "") + "result.html" + "?" + installUrl;
-        var outputString = i + "([QRコード](" + resultPageUrl + "))";
+        var outputString  = i + "([QRコード](" + resultPageUrl + "))";
 
         return outputString;
     });
@@ -40,8 +41,8 @@ $('#getQRCodeButton').on("click", function() {
 
     // 変換結果を画面に表示（改行区切りで表示）
     var outputString = outputArray.join("\n");
-    var output = $('#output');
-    var outputBox = $('#outputBox');
+    var output       = $('#output');
+    var outputBox    = $('#outputBox');
     output.text(outputString);
     outputBox.show('slow');
 
