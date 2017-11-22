@@ -6,24 +6,21 @@ $(function(){
 });
 
 // トースト表示
-(function() {
+var snackbarContainer = document.querySelector('#snackbar');
+var showToastButton = document.querySelector('#getQRCodeButton');
+showToastButton.addEventListener('click', function() {
     'use strict';
-    var snackbarContainer = document.querySelector('#snackbar');
-    var showToastButton = document.querySelector('#getQRCodeButton');
-    showToastButton.addEventListener('click', function() {
-        'use strict';
 
-        var input = $('#input').val();
+    var input = $('#input').val();
 
-        // プロモコードが入力されていない場合のエラー処理
-        if (input.length == 0) {
-            return;
-        }
+    // プロモコードが入力されていない場合のエラー処理
+    if (input.length == 0) {
+        return;
+    }
 
-        var data = {message: 'クリップボードにコピーしました'};
-        snackbarContainer.MaterialSnackbar.showSnackbar(data);
-    });
-}());
+    var data = {message: 'クリップボードにコピーしました'};
+    snackbarContainer.MaterialSnackbar.showSnackbar(data);
+});
 
 // 「QRコードを作成する」ボタンがクリックされたとき
 $('#getQRCodeButton').on("click", function() {
