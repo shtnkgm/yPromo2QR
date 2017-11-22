@@ -55,6 +55,8 @@ $('#getQRCodeButton').on("click", function() {
         }
 
         outputArray.push(outputString);
+
+        return true;
     });
 
     // 変換結果を画面に表示（改行区切りで表示）
