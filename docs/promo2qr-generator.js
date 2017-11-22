@@ -41,10 +41,8 @@ $('#getQRCodeButton').on("click", function() {
 
     // 変換結果を画面に表示（改行区切りで表示）
     var outputString = outputArray.join("\n");
-    var output       = $('#output');
-    var outputBox    = $('#outputBox');
-    output.text(outputString);
-    outputBox.show('slow');
+    $('#output'   ).text(outputString);
+    $('#outputBox').show('slow');
 
     // クリップボードにコピー
     var hiddenArea = $('#hiddenArea');
