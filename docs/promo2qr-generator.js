@@ -31,7 +31,7 @@ $('#getQRCodeButton').on("click", function() {
 
     // プロモコードが入力されていない場合のエラー処理
     if (input.length == 0) {
-        alert("プロモコードを入力してください")
+        alert("プロモコードを入力してください");
         return;
     }
 
@@ -39,7 +39,7 @@ $('#getQRCodeButton').on("click", function() {
     var inputArray = input.split(/\r\n|\r|\n/);
 
     // 出力用に変換して配列に格納
-    var outputArray = []
+    var outputArray = [];
     jQuery.each(inputArray, function() {
         if (this.length == 0) {
             return true;
