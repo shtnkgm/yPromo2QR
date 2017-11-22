@@ -38,25 +38,21 @@ $('#getQRCodeButton').on("click", function() {
     // 1行ごとに入力を配列に格納
     var inputArray = input.split(/\r\n|\r|\n/);
 
-    // 出力用に変換して配列に格納
-    var outputArray = [];
-    jQuery.each(inputArray, function() {
-        if (this.length == 0) {
-            return true;
-        }
+    // 不要な行を除去
+    inputArray = inputArray.filter(function(i){ return (i.length > 0); });
 
-        var installUrl = "https://phobos.apple.com/WebObjects/MZFinance.woa/wa/freeProductCodeWizard?code=" + this;
+    // 出力用に変換して配列に格納
+    var outputArray = inputArray.map(function(i) {
+        var installUrl = "https://phobos.apple.com/WebObjects/MZFinance.woa/wa/freeProductCodeWizard?code=" + i;
         var resultPageUrl = window.location.href.replace(/index.html/g, "") + "result.html" + "?" + installUrl;
-        var outputString = this + "([QRコード](" + resultPageUrl + "))";
+        var outputString = i + "([QRコード](" + resultPageUrl + "))";
 
         // Todoプレフィックス付与
         if( $("#todoPrefixLabel").is('.is-checked') ) {
             outputString = "- [ ] " + outputString;
         }
 
-        outputArray.push(outputString);
-
-        return true;
+        return outputString;
     });
 
     // 変換結果を画面に表示（改行区切りで表示）
