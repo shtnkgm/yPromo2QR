@@ -54,7 +54,7 @@ $('#getQRCodeButton').on("click", function() {
     hiddenArea.hide();
 
     // トースト表示
-    document.querySelector('#snackbar').MaterialSnackbar.showSnackbar({
+    $('#snackbar').get(0).MaterialSnackbar.showSnackbar({
 	message: 'クリップボードにコピーしました'
     });
 });
