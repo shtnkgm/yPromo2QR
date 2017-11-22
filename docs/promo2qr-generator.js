@@ -5,22 +5,6 @@ $(function(){
     $('#hiddenArea').hide();
 });
 
-// トースト表示
-var snackbarContainer = document.querySelector('#snackbar');
-var showToastButton = document.querySelector('#getQRCodeButton');
-showToastButton.addEventListener('click', function() {
-    'use strict';
-
-    var input = $('#input').val();
-
-    // プロモコードが入力されていない場合のエラー処理
-    if (input.length == 0) {
-        return;
-    }
-
-    var data = {message: 'クリップボードにコピーしました'};
-    snackbarContainer.MaterialSnackbar.showSnackbar(data);
-});
 
 // 「QRコードを作成する」ボタンがクリックされたとき
 $('#getQRCodeButton').on("click", function() {
@@ -66,4 +50,9 @@ $('#getQRCodeButton').on("click", function() {
     hiddenArea.select();
     document.execCommand('copy');
     hiddenArea.hide();
+
+    // トースト表示
+    document.querySelector('#snackbar').MaterialSnackbar.showSnackbar({
+	message: 'クリップボードにコピーしました'
+    });
 });
