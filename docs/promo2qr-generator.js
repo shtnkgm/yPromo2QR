@@ -28,13 +28,15 @@ $('#getQRCodeButton').on("click", function() {
         var resultPageUrl = window.location.href.replace(/index.html/g, "") + "result.html" + "?" + installUrl;
         var outputString = i + "([QRコード](" + resultPageUrl + "))";
 
-        // Todoプレフィックス付与
-        if( $("#todoPrefixLabel").is('.is-checked') ) {
-            outputString = "- [ ] " + outputString;
-        }
-
         return outputString;
     });
+
+    // Todoプレフィックス付与
+    if( $("#todoPrefixLabel").is('.is-checked') ) {
+	outputArray = outputArray.map(function(i) {
+            return "- [ ] " + i;
+	});
+    }
 
     // 変換結果を画面に表示（改行区切りで表示）
     var outputString = outputArray.join("\n");
