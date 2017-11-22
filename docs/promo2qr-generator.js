@@ -13,7 +13,10 @@ $('#getQRCodeButton').on("click", function() {
 
     // プロモコードが入力されていない場合のエラー処理
     if (input.length == 0) {
-        alert("プロモコードを入力してください");
+	$('#snackbar').get(0).MaterialSnackbar.showSnackbar({
+	    message: "プロモコードを入力してください"
+	});
+
         return;
     }
 
