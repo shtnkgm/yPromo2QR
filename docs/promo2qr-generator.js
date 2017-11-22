@@ -26,7 +26,7 @@ $('#getQRCodeButton').on("click", function() {
     // 出力用に変換して配列に格納
     var outputArray = inputArray.map(function(i) {
 	var installUrl    = "https://phobos.apple.com/WebObjects/MZFinance.woa/wa/freeProductCodeWizard?code=" + i;
-	var resultPageUrl = window.location.href.replace(/index.html/g, "") + "result.html" + "?" + installUrl;
+	var resultPageUrl = window.location.href.replace(/index\.html$/g, "") + "result.html" + "?" + installUrl;
 	var outputString  = i + "([QRコード](" + resultPageUrl + "))";
 
 	return outputString;
